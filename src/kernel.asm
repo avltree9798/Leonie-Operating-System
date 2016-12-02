@@ -9,4 +9,4 @@ extern kmain
 start:
         cli     ;bersihin interrupt
         call kmain ;panggil fungsinya
-        hlt         ;halt cpu
+        hlt
