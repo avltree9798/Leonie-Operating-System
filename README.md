@@ -1,1 +1,2 @@
-# leonie-operating-systen
+# Leonie Operating System
+Run makefile to compile
