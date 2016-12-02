@@ -2,9 +2,7 @@
 void launchBash(int n){
   string ch = (string)malloc(200);
   do{
-    print("LeOS(");
-    print(itoa(n));
-    print(")> ");
+    print("live@leanos:~# ");
     ch = readString();
     if(strcmp(ch,"help")){
       launchHelp();
