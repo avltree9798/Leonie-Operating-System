@@ -3,9 +3,9 @@
 #include "../headers/keyboard.h"
 #include "../headers/bash.h"
 #include "../headers/stdlib.h"
-kmain(){
+void kmain(){
   isr_install();
   clear();
-  println("Welcome to Leonie OS\ntype \"help\" to list all available commands");
+  print("Welcome to Lean OS\ntype \"help\" to list all available commands\n");
   launchBash(0);
 }
