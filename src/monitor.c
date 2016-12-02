@@ -4,10 +4,12 @@ const uint8 sw = 80,sh = 25,sd = 2;
 int color = 0x0F;
 void clearLine(uint8 from,uint8 to){
   uint16 i = sw * from * sd;
-  string vidmem=(string)0xb8000;
+  //The text screen video memory for colour monitors resides at 0xB8000,
+  //http://wiki.osdev.org/Printing_To_Screen
+  string mem=(string)0xb8000;
   for(i;i<(sw*to*sd);i++){
-    vidmem[(i / 2)*2 + 1 ] = color ;
-    vidmem[(i / 2)*2 ] = 0;
+    mem[(i / 2)*2 + 1 ] = color ;
+    mem[(i / 2)*2 ] = 0;
   }
 }
 void updateCursor(){
@@ -26,12 +28,12 @@ void clear(){
 }
 
 void scrollUp(uint8 lineNumber){
-  string vidmem = (string)0xb8000;
+  string mem = (string)0xb8000;
   uint16 i = 0;
   clearLine(0,lineNumber-1);
   for (i;i<sw*(sh-1)*2;i++)
   {
-    vidmem[i] = vidmem[i+sw*2*lineNumber];
+    mem[i] = mem[i+sw*2*lineNumber];
   }
   clearLine(sh-1-lineNumber,sh-1);
   if((cursorY - lineNumber) < 0 ){
@@ -50,12 +52,12 @@ void newLineCheck(){
   }
 }
 void printch(char c){
-  string vidmem = (string) 0xb8000;
+  string mem = (string) 0xb8000;
   switch(c){
     case (0x08):
       if(cursorX > 0){
         cursorX--;
-        vidmem[(cursorY * sw + cursorX)*sd]=0;
+        mem[(cursorY * sw + cursorX)*sd]=0;
       }
       break;
     case ('\r'):
@@ -66,8 +68,8 @@ void printch(char c){
       cursorY++;
       break;
     default:
-      vidmem [((cursorY * sw + cursorX))*sd] = c;
-      vidmem [((cursorY * sw + cursorX))*sd+1] = color;
+      mem [((cursorY * sw + cursorX))*sd] = c;
+      mem [((cursorY * sw + cursorX))*sd+1] = color;
       cursorX++;
       break;
   }
